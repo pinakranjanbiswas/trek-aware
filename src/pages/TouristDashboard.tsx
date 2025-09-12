@@ -118,54 +118,56 @@ const TouristDashboard = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-6">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Tourist Dashboard</h1>
+      {/* Enhanced Header with Animations */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 animate-fade-in">
+        <div className="animate-slide-in-left">
+          <h1 className="text-3xl font-bold text-foreground bg-gradient-hero bg-clip-text text-transparent">
+            Tourist Dashboard
+          </h1>
           <p className="text-muted-foreground">Welcome back, {profile.name}</p>
         </div>
-        <div className="flex items-center gap-3">
-          <Badge className={getSafetyBadge(safetyScore.overall)}>
+        <div className="flex items-center gap-3 animate-slide-in-right">
+          <Badge className={`${getSafetyBadge(safetyScore.overall)} animate-glow-pulse hover:scale-105 transition-transform duration-300`}>
             <Shield className="mr-1 h-3 w-3" />
             Safety Score: {Math.round(safetyScore.overall)}%
           </Badge>
-          <Badge variant="secondary">
+          <Badge variant="secondary" className="glass backdrop-blur-sm hover:scale-105 transition-transform duration-300">
             <User className="mr-1 h-3 w-3" />
             ID: {profile.digitalId}
           </Badge>
         </div>
       </div>
 
-      {/* Quick Stats */}
+      {/* Enhanced Quick Stats with Staggered Animations */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="shadow-soft">
+        <Card className="shadow-soft hover:shadow-floating transition-all duration-500 interactive-card animate-fade-in-1">
           <CardContent className="p-4 text-center">
-            <div className={`text-2xl font-bold ${getSafetyColor(safetyScore.overall)}`}>
+            <div className={`text-2xl font-bold ${getSafetyColor(safetyScore.overall)} animate-glow-pulse`}>
               {Math.round(safetyScore.overall)}%
             </div>
             <p className="text-sm text-muted-foreground">Overall Safety</p>
           </CardContent>
         </Card>
         
-        <Card className="shadow-soft">
+        <Card className="shadow-soft hover:shadow-floating transition-all duration-500 interactive-card animate-fade-in-2">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-primary">24h</div>
+            <div className="text-2xl font-bold text-primary animate-glow-pulse">24h</div>
             <p className="text-sm text-muted-foreground">Monitoring</p>
           </CardContent>
         </Card>
         
-        <Card className="shadow-soft">
+        <Card className="shadow-soft hover:shadow-floating transition-all duration-500 interactive-card animate-fade-in-3">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-success">
+            <div className="text-2xl font-bold text-success animate-bounce">
               <CheckCircle className="h-6 w-6 mx-auto" />
             </div>
             <p className="text-sm text-muted-foreground">Verified ID</p>
           </CardContent>
         </Card>
         
-        <Card className="shadow-soft">
+        <Card className="shadow-soft hover:shadow-floating transition-all duration-500 interactive-card animate-fade-in-4">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-primary">
+            <div className="text-2xl font-bold text-primary animate-float">
               <MapPin className="h-6 w-6 mx-auto" />
             </div>
             <p className="text-sm text-muted-foreground">Live Tracking</p>
@@ -173,96 +175,100 @@ const TouristDashboard = () => {
         </Card>
       </div>
 
-      <Tabs defaultValue="overview" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="safety">Safety</TabsTrigger>
-          <TabsTrigger value="map">Live Map</TabsTrigger>
-          <TabsTrigger value="profile">Profile</TabsTrigger>
+      <Tabs defaultValue="overview" className="space-y-6 animate-fade-in-up">
+        <TabsList className="grid w-full grid-cols-4 glass backdrop-blur-sm">
+          <TabsTrigger value="overview" className="transition-all duration-300 hover:scale-105">Overview</TabsTrigger>
+          <TabsTrigger value="safety" className="transition-all duration-300 hover:scale-105">Safety</TabsTrigger>
+          <TabsTrigger value="map" className="transition-all duration-300 hover:scale-105">Live Map</TabsTrigger>
+          <TabsTrigger value="profile" className="transition-all duration-300 hover:scale-105">Profile</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
           <div className="grid md:grid-cols-3 gap-6">
-            {/* Safety Metrics */}
-            <Card className="shadow-medium">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-primary" />
+            {/* Enhanced Safety Metrics */}
+            <Card className="shadow-medium hover:shadow-floating transition-all duration-500 interactive-card animate-slide-in-left">
+              <CardHeader className="relative">
+                <div className="absolute inset-0 bg-gradient-shimmer opacity-0 hover:opacity-100 transition-opacity duration-1000 rounded-t-lg"></div>
+                <CardTitle className="flex items-center gap-2 relative z-10">
+                  <Shield className="h-5 w-5 text-primary animate-glow-pulse" />
                   Safety Metrics
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
+              <CardContent className="space-y-4 relative z-10">
+                <div className="animate-fade-in-1">
                   <div className="flex justify-between mb-2">
                     <span className="text-sm">Location Safety</span>
-                    <span className={`text-sm font-medium ${getSafetyColor(safetyScore.location)}`}>
+                    <span className={`text-sm font-medium ${getSafetyColor(safetyScore.location)} animate-glow-pulse`}>
                       {Math.round(safetyScore.location)}%
                     </span>
                   </div>
-                  <Progress value={safetyScore.location} className="h-2" />
+                  <Progress value={safetyScore.location} className="h-2 hover:scale-105 transition-transform duration-300" />
                 </div>
                 
-                <div>
+                <div className="animate-fade-in-2">
                   <div className="flex justify-between mb-2">
                     <span className="text-sm">Connectivity</span>
-                    <span className={`text-sm font-medium ${getSafetyColor(safetyScore.connectivity)}`}>
+                    <span className={`text-sm font-medium ${getSafetyColor(safetyScore.connectivity)} animate-glow-pulse`}>
                       {Math.round(safetyScore.connectivity)}%
                     </span>
                   </div>
-                  <Progress value={safetyScore.connectivity} className="h-2" />
+                  <Progress value={safetyScore.connectivity} className="h-2 hover:scale-105 transition-transform duration-300" />
                 </div>
                 
-                <div>
+                <div className="animate-fade-in-3">
                   <div className="flex justify-between mb-2">
                     <span className="text-sm">Emergency Readiness</span>
-                    <span className={`text-sm font-medium ${getSafetyColor(safetyScore.emergency)}`}>
+                    <span className={`text-sm font-medium ${getSafetyColor(safetyScore.emergency)} animate-glow-pulse`}>
                       {Math.round(safetyScore.emergency)}%
                     </span>
                   </div>
-                  <Progress value={safetyScore.emergency} className="h-2" />
+                  <Progress value={safetyScore.emergency} className="h-2 hover:scale-105 transition-transform duration-300" />
                 </div>
               </CardContent>
             </Card>
 
-            {/* Emergency Panel */}
-            <EmergencyButton />
+            {/* Enhanced Emergency Panel */}
+            <div className="animate-scale-in">
+              <EmergencyButton />
+            </div>
 
-            {/* System Status */}
-            <Card className="shadow-soft">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5 text-success" />
+            {/* Enhanced System Status */}
+            <Card className="shadow-soft hover:shadow-floating transition-all duration-500 interactive-card animate-slide-in-right">
+              <CardHeader className="relative">
+                <div className="absolute inset-0 bg-gradient-shimmer opacity-0 hover:opacity-100 transition-opacity duration-1000 rounded-t-lg"></div>
+                <CardTitle className="flex items-center gap-2 relative z-10">
+                  <CheckCircle className="h-5 w-5 text-success animate-bounce" />
                   System Status
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center justify-between">
+              <CardContent className="space-y-3 relative z-10">
+                <div className="flex items-center justify-between animate-fade-in-1 group hover:scale-105 transition-transform duration-300">
                   <div className="flex items-center gap-2">
-                    <Wifi className="h-4 w-4 text-success" />
+                    <Wifi className="h-4 w-4 text-success group-hover:animate-wiggle" />
                     <span className="text-sm">Network</span>
                   </div>
-                  <Badge className="bg-success text-success-foreground">Online</Badge>
+                  <Badge className="bg-success text-success-foreground animate-glow-pulse">Online</Badge>
                 </div>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between animate-fade-in-2 group hover:scale-105 transition-transform duration-300">
                   <div className="flex items-center gap-2">
-                    <Battery className="h-4 w-4 text-warning" />
+                    <Battery className="h-4 w-4 text-warning group-hover:animate-wiggle" />
                     <span className="text-sm">Device</span>
                   </div>
                   <Badge className="bg-warning text-warning-foreground">75%</Badge>
                 </div>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between animate-fade-in-3 group hover:scale-105 transition-transform duration-300">
                   <div className="flex items-center gap-2">
-                    <Navigation className="h-4 w-4 text-success" />
+                    <Navigation className="h-4 w-4 text-success group-hover:animate-wiggle" />
                     <span className="text-sm">GPS</span>
                   </div>
-                  <Badge className="bg-success text-success-foreground">Active</Badge>
+                  <Badge className="bg-success text-success-foreground animate-glow-pulse">Active</Badge>
                 </div>
                 
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between animate-fade-in-4 group hover:scale-105 transition-transform duration-300">
                   <div className="flex items-center gap-2">
-                    <Heart className="h-4 w-4 text-primary" />
+                    <Heart className="h-4 w-4 text-primary group-hover:animate-wiggle" />
                     <span className="text-sm">Health Monitor</span>
                   </div>
                   <Badge className="bg-primary text-primary-foreground">Normal</Badge>

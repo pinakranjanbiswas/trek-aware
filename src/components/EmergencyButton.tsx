@@ -83,25 +83,34 @@ const EmergencyButton = ({ onEmergency }: EmergencyButtonProps) => {
   };
 
   return (
-    <Card className={`transition-all duration-300 ${
+    <Card className={`transition-all duration-500 hover:scale-105 ${
       isActivated 
-        ? "shadow-emergency border-emergency animate-pulse" 
-        : "shadow-soft hover:shadow-medium"
+        ? "shadow-emergency border-emergency animate-glow-pulse bg-emergency/5 backdrop-blur-sm" 
+        : "shadow-soft hover:shadow-floating interactive-card"
     }`}>
-      <CardContent className="p-6 text-center">
-        <div className="space-y-4">
+      <CardContent className="p-6 text-center relative overflow-hidden">
+        {/* Background Effects */}
+        <div className={`absolute inset-0 transition-all duration-300 ${
+          isActivated ? "bg-gradient-emergency opacity-10 animate-shimmer" : "opacity-0"
+        }`}></div>
+        
+        <div className="space-y-4 relative z-10">
           <div className="flex justify-center">
-            <div className={`p-4 rounded-full transition-all duration-300 ${
+            <div className={`p-4 rounded-full transition-all duration-500 ${
               isActivated 
-                ? "bg-emergency text-emergency-foreground animate-bounce" 
-                : "bg-emergency/10 text-emergency"
+                ? "bg-emergency text-emergency-foreground animate-glow-pulse shadow-emergency" 
+                : "bg-emergency/10 text-emergency hover:bg-emergency/20 hover:scale-110"
             }`}>
-              <AlertTriangle className="h-8 w-8" />
+              <AlertTriangle className={`h-8 w-8 transition-all duration-300 ${
+                isActivated ? "animate-wiggle" : "group-hover:animate-bounce"
+              }`} />
             </div>
           </div>
 
-          <div>
-            <h3 className="font-semibold text-lg mb-2">
+          <div className="animate-fade-in">
+            <h3 className={`font-semibold text-lg mb-2 transition-all duration-300 ${
+              isActivated ? "text-emergency animate-glow-pulse" : "text-foreground"
+            }`}>
               {isActivated ? "EMERGENCY ACTIVATED" : "Emergency Alert"}
             </h3>
             <p className="text-muted-foreground text-sm">
@@ -114,36 +123,38 @@ const EmergencyButton = ({ onEmergency }: EmergencyButtonProps) => {
 
           {!isActivated ? (
             <Button
-              variant="destructive"
+              variant="emergency"
               size="lg"
               onMouseDown={handleEmergencyPress}
-              className="w-full bg-emergency hover:bg-emergency-glow shadow-emergency"
+              className="w-full bg-emergency hover:bg-emergency-glow shadow-emergency 
+                        transition-all duration-300 hover:scale-105 hover:shadow-floating
+                        animate-pulse group"
             >
-              <AlertTriangle className="mr-2 h-5 w-5" />
+              <AlertTriangle className="mr-2 h-5 w-5 group-hover:animate-wiggle" />
               PANIC BUTTON
             </Button>
           ) : (
-            <div className="space-y-3">
-              <div className="text-6xl font-bold text-emergency animate-pulse">
+            <div className="space-y-3 animate-bounce-in">
+              <div className="text-6xl font-bold text-emergency animate-glow-pulse">
                 {countdown}
               </div>
               <Button
                 variant="outline"
                 onClick={cancelEmergency}
-                className="w-full"
+                className="w-full glass backdrop-blur-sm hover:scale-105 transition-all duration-300"
               >
                 Cancel Alert
               </Button>
             </div>
           )}
 
-          <div className="flex justify-around text-xs text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Phone className="h-3 w-3" />
+          <div className="flex justify-around text-xs text-muted-foreground animate-fade-in-up">
+            <div className="flex items-center gap-1 group hover:scale-110 transition-transform duration-300">
+              <Phone className="h-3 w-3 group-hover:animate-wiggle" />
               <span>Auto-call 911</span>
             </div>
-            <div className="flex items-center gap-1">
-              <MapPin className="h-3 w-3" />
+            <div className="flex items-center gap-1 group hover:scale-110 transition-transform duration-300">
+              <MapPin className="h-3 w-3 group-hover:animate-wiggle" />
               <span>Share location</span>
             </div>
           </div>
