@@ -1,9 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { MapPin, Shield, AlertTriangle, Users, Eye, EyeOff } from "lucide-react";
+import { MapPin, Shield, Users, Eye, EyeOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import LeafletMapComponent from "@/components/maps/LeafletMapComponent";
 
 interface Tourist {
   id: string;
@@ -27,7 +28,6 @@ const SafetyMap = () => {
   const [safeZones, setSafeZones] = useState<SafeZone[]>([]);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [isTracking, setIsTracking] = useState(false);
-  const mapRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
   // Mock data for demonstration
@@ -163,52 +163,17 @@ const SafetyMap = () => {
             {isTracking ? "Stop Tracking" : "Start Tracking"}
           </Button>
         </CardHeader>
-        <CardContent>
-          {/* Simulated Map Interface */}
-          <div 
-            ref={mapRef}
-            className="w-full h-96 bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg border-2 border-dashed border-primary/20 flex items-center justify-center relative overflow-hidden"
-          >
-            {/* Background pattern to simulate map */}
-            <div className="absolute inset-0 opacity-10">
-              <div className="grid grid-cols-8 grid-rows-8 h-full">
-                {Array.from({ length: 64 }).map((_, i) => (
-                  <div key={i} className="border border-primary/20"></div>
-                ))}
-              </div>
-            </div>
-
-            {/* Map overlay content */}
-            <div className="relative z-10 text-center space-y-4">
-              <div className="flex items-center justify-center gap-2 text-primary">
-                <MapPin className="h-8 w-8" />
-                <span className="text-lg font-semibold">Interactive Safety Map</span>
-              </div>
-              <p className="text-sm text-muted-foreground max-w-md">
-                This would show a real interactive map with tourist locations, safe zones, 
-                and real-time safety alerts. Integration with Google Maps or OpenStreetMap.
-              </p>
-
-              {/* Location indicators */}
-              <div className="flex justify-center gap-4 mt-6">
-                <div className="flex items-center gap-2 text-xs">
-                  <div className="w-3 h-3 rounded-full bg-success animate-pulse"></div>
-                  <span>Safe Tourists ({tourists.filter(t => t.status === 'safe').length})</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs">
-                  <div className="w-3 h-3 rounded-full bg-warning animate-pulse"></div>
-                  <span>Caution ({tourists.filter(t => t.status === 'caution').length})</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs">
-                  <div className="w-3 h-3 rounded-full bg-emergency animate-pulse"></div>
-                  <span>Danger ({tourists.filter(t => t.status === 'danger').length})</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
+        <CardContent className="p-0">
+          <LeafletMapComponent 
+            center={[28.6139, 77.2090]}
+            zoom={6}
+            height="500px"
+            showSafetyZones={true}
+            showIncidents={true}
+          />
+          
           {userLocation && (
-            <div className="mt-4 p-3 bg-success/10 rounded-lg border border-success/20">
+            <div className="m-4 p-3 bg-success/10 rounded-lg border border-success/20">
               <p className="text-sm text-success flex items-center gap-2">
                 <MapPin className="h-4 w-4" />
                 Your location: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}

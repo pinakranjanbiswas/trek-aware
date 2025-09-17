@@ -17,6 +17,7 @@ import {
   TrendingUp,
   Activity
 } from "lucide-react";
+import LeafletMapComponent from '@/components/maps/LeafletMapComponent';
 import { useToast } from "@/hooks/use-toast";
 
 interface Incident {
@@ -430,52 +431,13 @@ const PoliceDashboard = () => {
         </TabsContent>
 
         <TabsContent value="map">
-          <Card className="shadow-medium">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-primary" />
-                Command Center Map
-              </CardTitle>
-              <CardDescription>Real-time positioning and incident visualization</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="w-full h-96 bg-gradient-to-br from-primary/5 to-primary/10 rounded-lg border-2 border-dashed border-primary/20 flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-10">
-                  <div className="grid grid-cols-12 grid-rows-8 h-full">
-                    {Array.from({ length: 96 }).map((_, i) => (
-                      <div key={i} className="border border-primary/20"></div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="relative z-10 text-center space-y-4">
-                  <div className="flex items-center justify-center gap-2 text-primary">
-                    <Shield className="h-8 w-8" />
-                    <span className="text-lg font-semibold">Police Command Map</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground max-w-md">
-                    Interactive command center map showing real-time tourist locations, 
-                    incident markers, patrol units, and safety zones with heat mapping.
-                  </p>
-
-                  <div className="flex justify-center gap-6 mt-6">
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className="w-3 h-3 rounded-full bg-success animate-pulse"></div>
-                      <span>Safe Zones</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className="w-3 h-3 rounded-full bg-emergency animate-pulse"></div>
-                      <span>Active Incidents</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-xs">
-                      <div className="w-3 h-3 rounded-full bg-primary animate-pulse"></div>
-                      <span>Patrol Units</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <LeafletMapComponent 
+            center={[28.6139, 77.2090]}
+            zoom={6}
+            height="600px"
+            showSafetyZones={true}
+            showIncidents={true}
+          />
         </TabsContent>
 
         <TabsContent value="reports">
